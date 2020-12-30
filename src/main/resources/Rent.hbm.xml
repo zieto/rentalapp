@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "Rent" table = "wypozyczenia">
+
+        <meta attribute = "class-description">
+            This class contains rents detail.
+        </meta>
+
+        <id name = "id" type = "int" column = "id">
+            <generator class="native"/>
+        </id>
+
+        <property name = "car_id" column = "id_samochodu" type = "int"/>
+        <property name = "client_id" column = "id_klienta" type = "int"/>
+        <property name = "employee_id" column = "id_pracownika" type = "int"/>
+        <property name = "rent_date" column = "data_wypozyczenia" type = "date"/>
+        <property name = "return_date" column = "data_zwrotu" type = "date"/>
+
+    </class>
+</hibernate-mapping>

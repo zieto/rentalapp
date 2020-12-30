@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="EmployeeList">
+  <grid id="27dc6" binding="EmployeePanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="604" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="d4d34" class="javax.swing.JTable" binding="table1" default-binding="true">
+        <constraints border-constraint="North"/>
+        <properties/>
+      </component>
+      <grid id="24925" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="d1118" class="javax.swing.JButton" binding="cancelButton">
+            <constraints/>
+            <properties>
+              <text value="Anuluj"/>
+            </properties>
+          </component>
+          <component id="27f3a" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Imię:"/>
+            </properties>
+          </component>
+          <component id="2e905" class="javax.swing.JTextField" binding="textFieldName">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="97434" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Nazwisko:"/>
+            </properties>
+          </component>
+          <component id="3bfb0" class="javax.swing.JTextField" binding="textFieldSurname">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="43b5d" class="javax.swing.JButton" binding="searchButton">
+            <constraints/>
+            <properties>
+              <text value="Szukaj"/>
+            </properties>
+          </component>
+          <grid id="665e3" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="32943" class="javax.swing.JButton" binding="addButton">
+                <constraints border-constraint="West"/>
+                <properties>
+                  <text value="Dodaj"/>
+                </properties>
+              </component>
+              <component id="cf0db" class="javax.swing.JButton" binding="deleteButton">
+                <constraints border-constraint="South"/>
+                <properties>
+                  <text value="Usuń"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

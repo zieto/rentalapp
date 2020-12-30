@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ClientList">
+  <grid id="27dc6" binding="ClientPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="e0e61" class="javax.swing.JTable" binding="table2">
+        <constraints border-constraint="North"/>
+        <properties/>
+      </component>
+      <grid id="4d20e" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="241f2" class="javax.swing.JButton" binding="cancelButton">
+            <constraints/>
+            <properties>
+              <text value="Anuluj"/>
+            </properties>
+          </component>
+          <component id="daaa7" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Imię"/>
+            </properties>
+          </component>
+          <component id="a9a13" class="javax.swing.JTextField" binding="textFieldName">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="3d199" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Nazwisko"/>
+            </properties>
+          </component>
+          <component id="28e9c" class="javax.swing.JTextField" binding="textFieldSurname">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="d9845" class="javax.swing.JButton" binding="searchButton">
+            <constraints/>
+            <properties>
+              <text value="Szukaj"/>
+            </properties>
+          </component>
+          <component id="372e5" class="javax.swing.JButton" binding="addButton">
+            <constraints/>
+            <properties>
+              <text value="Dodaj"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
