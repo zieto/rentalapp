@@ -28,6 +28,24 @@ public class RentList extends JFrame {
             }
         });
 
+        addClientButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new AddClient();
+            }
+        });
+
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new AddRent();
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //TODO
+            }
+        });
+
         DefaultTableModel model = new DefaultTableModel();
         table1 = new JTable(model);
 

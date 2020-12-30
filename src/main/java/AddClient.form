@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AddClient">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="617" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="9a1db" class="javax.swing.JButton" binding="cancelButton">
+        <constraints/>
+        <properties>
+          <text value="Anuluj"/>
+        </properties>
+      </component>
+      <component id="65690" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Imię:"/>
+        </properties>
+      </component>
+      <component id="57c49" class="javax.swing.JTextField" binding="nameTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="eaf12" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Nazwisko:"/>
+        </properties>
+      </component>
+      <component id="9da0c" class="javax.swing.JTextField" binding="surnameTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="5603b" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Email:"/>
+        </properties>
+      </component>
+      <component id="8b791" class="javax.swing.JTextField" binding="emailTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="2dd06" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Telefon"/>
+        </properties>
+      </component>
+      <component id="ac816" class="javax.swing.JTextField" binding="telephoneTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="bacf" class="javax.swing.JButton" binding="addButton">
+        <constraints/>
+        <properties>
+          <text value="Dodaj"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

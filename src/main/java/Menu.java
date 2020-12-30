@@ -11,6 +11,8 @@ public class Menu extends JFrame{
     private JButton clientsButton;
 
     public Menu() {
+
+
         exitButton.addActionListener(new ActionListener() {
             //@Override
             public void actionPerformed(ActionEvent e) {
@@ -53,4 +55,5 @@ public class Menu extends JFrame{
         menu.setLocationRelativeTo(null);
         menu.setSize(600,400);
     }
+
 }

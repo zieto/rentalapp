@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AddCarCategory">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="536" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="4810a" class="javax.swing.JButton" binding="cancelButton">
+        <constraints/>
+        <properties>
+          <text value="Anuluj"/>
+        </properties>
+      </component>
+      <component id="ac0a8" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Nazwa:"/>
+        </properties>
+      </component>
+      <component id="58c23" class="javax.swing.JTextField" binding="nameTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="98db2" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Opiekun:"/>
+        </properties>
+      </component>
+      <component id="d7c1e" class="javax.swing.JComboBox" binding="adminComboBox">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="b073c" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Opis:"/>
+        </properties>
+      </component>
+      <component id="ef3b9" class="javax.swing.JTextField" binding="descriptionTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="46c8d" class="javax.swing.JButton" binding="addButton">
+        <constraints/>
+        <properties>
+          <text value="Dodaj"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

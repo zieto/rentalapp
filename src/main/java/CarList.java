@@ -36,6 +36,12 @@ public class CarList extends JFrame {
             }
         });
 
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new AddCar();
+            }
+        });
+
         DefaultTableModel model = new DefaultTableModel();
         table1 = new JTable(model);
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AddRent">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="780" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="63a99" class="javax.swing.JButton" binding="cancelButton">
+        <constraints/>
+        <properties>
+          <text value="Anuluj"/>
+        </properties>
+      </component>
+      <component id="ff248" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Klient:"/>
+        </properties>
+      </component>
+      <component id="7e443" class="javax.swing.JComboBox" binding="clientComboBox">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="a092c" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Samochód:"/>
+        </properties>
+      </component>
+      <component id="47795" class="javax.swing.JComboBox" binding="carComboBox">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="61829" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Pracownik:"/>
+        </properties>
+      </component>
+      <component id="389ee" class="javax.swing.JComboBox" binding="employeeComboBox">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="a2e7c" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Data zwrotu:"/>
+        </properties>
+      </component>
+      <component id="d6204" class="javax.swing.JFormattedTextField" binding="returnDateFormattedTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="309d1" class="javax.swing.JButton" binding="addButton">
+        <constraints/>
+        <properties>
+          <text value="Wypożycz"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Date;
 import java.util.Iterator;
@@ -8,36 +9,17 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateTest {
+public class Hibernate {
     private static SessionFactory factory;
-//    public static void main(String[] args) {
-//
-//        try {
-//            factory = new Configuration().configure().buildSessionFactory();
-//        } catch (Throwable ex) {
-//            System.err.println("Failed to create sessionFactory object." + ex);
-//            throw new ExceptionInInitializerError(ex);
-//        }
-//
-//        HibernateTest ME = new HibernateTest();
-//
-//        /* Add few employee records in database */
-//        Integer empID1 = ME.addEmployee("Zara", "Ali", "124",  1000);
-//        Integer empID2 = ME.addEmployee("Daisy", "Das", "546", 5000);
-//        Integer empID3 = ME.addEmployee("John", "Paul", "615678", 10000);
-//
-//        /* List down all the employees */
-//        ME.listEmployees();
-//
-//        /* Update employee's records */
-//        ME.updateEmployee(empID1, 5000);
-//
-//        /* Delete an employee from the database */
-//        ME.deleteEmployee(empID2);
-//
-//        /* List down new list of the employees */
-//        ME.listEmployees();
-//    }
+    {
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+
+    }
 
     /* Method to CREATE an employee in the database */
     public Integer addEmployee(String fname, String lname, String tel, int salary){
@@ -60,18 +42,24 @@ public class HibernateTest {
     }
 
     /* Method to  READ all the employees */
-    public void listEmployees( ){
+    public List<Employee> listEmployees( ){
+        List<Employee> employees = new LinkedList<Employee>();
+        List<Employee> emp = new LinkedList<Employee>();
         Session session = factory.openSession();
         Transaction tx = null;
+        String name, surname, telephone;
+        int salary;
 
         try {
             tx = session.beginTransaction();
-            List employees = session.createQuery("FROM Employee").list();
+            employees = session.createQuery("FROM Employee").list();
             for (Iterator iterator = employees.iterator(); iterator.hasNext();){
                 Employee employee = (Employee) iterator.next();
-                System.out.print("First Name: " + employee.getFirstName());
-                System.out.print("  Last Name: " + employee.getLastName());
-                System.out.println("  Salary: " + employee.getSalary());
+                name  = employee.getFirstName();
+                surname = employee.getLastName();
+                telephone = employee.getTelephone();
+                salary = employee.getSalary();
+                emp.add(new Employee(name, surname, telephone, salary));
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -80,6 +68,7 @@ public class HibernateTest {
         } finally {
             session.close();
         }
+        return emp;
     }
 
     /* Method to UPDATE salary for an employee */
@@ -118,4 +107,54 @@ public class HibernateTest {
             session.close();
         }
     }
+
+    /* Method to  READ all the clients */
+    public List<Client> listClients( ){
+        List<Client> clients = new LinkedList<Client>();
+        List<Client> cli = new LinkedList<Client>();
+        Session session = factory.openSession();
+        Transaction tx = null;
+        String name, surname, telephone, email;
+
+        try {
+            tx = session.beginTransaction();
+            clients = session.createQuery("FROM Client").list();
+            for (Iterator iterator = clients.iterator(); iterator.hasNext();){
+                Client client = (Client) iterator.next();
+                name  = client.getFirstName();
+                surname = client.getLastName();
+                telephone = client.getTelephone();
+                email = client.getEmail();
+                cli.add(new Client(name, surname, telephone, email));
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return cli;
+    }
+
+    /* Method to CREATE a client in the database */
+    public Integer addClient(String fname, String lname, String tel, String email){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer clientID = null;
+
+        try {
+            tx = session.beginTransaction();
+            Client client = new Client(fname, lname, tel, email);
+            clientID = (Integer) session.save(client);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return clientID;
+    }
+
 }
