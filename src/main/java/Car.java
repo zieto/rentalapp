@@ -7,12 +7,22 @@ public class Car {
     private String engine;
     private Boolean rented;
 
+    private String cat;
+
     public Car(){
     }
 
-    public Car(int id, int cat_id, String brand, String model, String engine, Boolean rented){
-        this.id = id;
+    public Car(int cat_id, String brand, String model, String engine, Boolean rented){
         this.cat_id = cat_id;
+        this.brand = brand;
+        this.model = model;
+        this.engine = engine;
+        this.rented = rented;
+    }
+
+    public Car(String cat, String brand, String model, String engine, Boolean rented){
+        this.cat = cat;
+        this.brand = brand;
         this.model = model;
         this.engine = engine;
         this.rented = rented;
@@ -66,4 +76,9 @@ public class Car {
         this.rented = rented;
     }
 
+    public String getCat(){ return cat;}
+
+    public void setCat(String cat) {
+        this.cat = cat;
+    }
 }

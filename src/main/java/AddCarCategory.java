@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class AddCarCategory extends JFrame {
     private JPanel panel1;
@@ -12,7 +13,7 @@ public class AddCarCategory extends JFrame {
 
     public AddCarCategory(){
 
-        Hibernate db_connection = new Hibernate();
+        final Hibernate db_connection = new Hibernate();
 
         setVisible(true);
         setTitle("Dodaj nową kategorię");
@@ -25,8 +26,12 @@ public class AddCarCategory extends JFrame {
         nameTextField.setColumns(10);
         descriptionTextField.setColumns(25);
 
-        //TODO
-        //adminComboBox.addItem("");
+        List<Employee> list = db_connection.listEmployees();
+        Object[] row = new Object[1];
+        for (int i = 0; i < list.size(); i++){
+            row[0] = list.get(i).getFirstName() + " " + list.get(i).getLastName();
+            adminComboBox.addItem(row[0]);
+        }
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -36,7 +41,15 @@ public class AddCarCategory extends JFrame {
 
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                String name = nameTextField.getText();
+                String desc = descriptionTextField.getText();
+                String fullname = (String) adminComboBox.getSelectedItem();
+                String split[] = fullname.split(" ");
+
+                db_connection.addCarCategory(name, desc, split[0], split[1]);
+
+                JOptionPane.showMessageDialog(null, "Dodano nową kategorię!");
+                dispose();
             }
         });
 

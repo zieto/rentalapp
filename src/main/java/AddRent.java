@@ -1,12 +1,9 @@
 import javax.swing.*;
-import javax.swing.text.DateFormatter;
-import javax.swing.text.DefaultFormatter;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class AddRent extends JFrame {
     private JButton cancelButton;
@@ -14,12 +11,12 @@ public class AddRent extends JFrame {
     private JComboBox clientComboBox;
     private JComboBox carComboBox;
     private JComboBox employeeComboBox;
-    private JFormattedTextField returnDateFormattedTextField;
     private JButton addButton;
+    private JTextField textField1;
 
     public AddRent(){
 
-        Hibernate db_connection = new Hibernate();
+        final Hibernate db_connection = new Hibernate();
 
         setVisible(true);
         setContentPane(panel1);
@@ -30,17 +27,28 @@ public class AddRent extends JFrame {
         setSize(850,80);
 
 
-        //TODO
-//        clientComboBox.addItem("");
-//        carComboBox.addItem("");
-//        employeeComboBox.addItem("");
+        List<Client> client_list = db_connection.listClients();
+        Object[] client_row = new Object[1];
+        for (int i = 0; i < client_list.size(); i++){
+            client_row[0] = client_list.get(i).getFirstName() + " " + client_list.get(i).getLastName();
+            clientComboBox.addItem(client_row[0]);
+        }
 
-        returnDateFormattedTextField.setColumns(7);
+        List<Employee> employee_list = db_connection.listEmployees();
+        Object[] employee_row = new Object[1];
+        for (int i = 0; i < employee_list.size(); i++){
+            employee_row[0] = employee_list.get(i).getFirstName() + " " + employee_list.get(i).getLastName();
+            employeeComboBox.addItem(employee_row[0]);
+        }
 
-        //TODO
-        //add mask
-        DateFormat format = new SimpleDateFormat("DD-MM-YYYY");
-        returnDateFormattedTextField = new javax.swing.JFormattedTextField(format);
+        List<Car> list = db_connection.listAvailableCars();
+        Object[] row = new Object[1];
+        for (int i = 0; i < list.size(); i++){
+            row[0] = list.get(i).getBrand() + " " + list.get(i).getModel();
+            carComboBox.addItem(row[0]);
+        }
+
+        textField1.setColumns(4);
 
 
         cancelButton.addActionListener(new ActionListener() {
@@ -51,7 +59,22 @@ public class AddRent extends JFrame {
 
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                String carFull = (String) carComboBox.getSelectedItem();
+                String car_split[] = carFull.split(" ");
+
+                String employeeFullname = (String) employeeComboBox.getSelectedItem();
+                String ef_split[] = employeeFullname.split(" ");
+
+                String clientFullname = (String) clientComboBox.getSelectedItem();
+                String cf_split[] = clientFullname.split(" ");
+
+                String daysString = textField1.getText();
+                int days = Integer.parseInt(daysString);
+
+                db_connection.addRent(car_split[0], car_split[1], ef_split[0], ef_split[1], cf_split[0], cf_split[1], days);
+
+                JOptionPane.showMessageDialog(null, "Dodano nową kategorię!");
+                dispose();
             }
         });
 

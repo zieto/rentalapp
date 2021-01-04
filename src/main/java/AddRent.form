@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AddRent">
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
     <constraints>
-      <xy x="20" y="20" width="780" height="400"/>
+      <xy x="20" y="20" width="761" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -43,13 +43,13 @@
         <constraints/>
         <properties/>
       </component>
-      <component id="a2e7c" class="javax.swing.JLabel">
+      <component id="1ddb4" class="javax.swing.JLabel">
         <constraints/>
         <properties>
-          <text value="Data zwrotu:"/>
+          <text value="Ilość dni:"/>
         </properties>
       </component>
-      <component id="d6204" class="javax.swing.JFormattedTextField" binding="returnDateFormattedTextField">
+      <component id="c6e04" class="javax.swing.JTextField" binding="textField1" default-binding="true">
         <constraints/>
         <properties/>
       </component>

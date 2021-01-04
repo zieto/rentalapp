@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class RentList extends JFrame {
     private JPanel RentPanel;
@@ -13,6 +14,8 @@ public class RentList extends JFrame {
 
 
     public RentList(){
+
+        Hibernate db_connection = new Hibernate();
 
         setVisible(true);
         setTitle("Aktywne wynajmy");
@@ -54,6 +57,17 @@ public class RentList extends JFrame {
         model.addColumn("pracownik");
         model.addColumn("wypożyczono");
         model.addColumn("zwrot");
+
+        List<Rent> list = db_connection.listRents();
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++){
+            row[0] = list.get(i).getModel();
+            row[1] = list.get(i).getkName() +" "+ list.get(i).getkLastName();
+            row[2] = list.get(i).getpName() +" "+ list.get(i).getpLastName();
+            row[3] = list.get(i).getRent_date();
+            row[4] = list.get(i).getReturn_date();
+            model.addRow(row);
+        }
 
         JScrollPane jScrollPane = new JScrollPane(table1);
         table1.setVisible(true);

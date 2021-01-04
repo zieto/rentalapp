@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class CarList extends JFrame {
     private JTable table1;
@@ -15,6 +16,8 @@ public class CarList extends JFrame {
     private JButton deleteButton;
 
     public CarList() {
+
+        Hibernate db_connection = new Hibernate();
 
         setVisible(true);
         setTitle("Lista samochodow");
@@ -42,7 +45,28 @@ public class CarList extends JFrame {
             }
         });
 
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel(){
+            public Class<?> getColumnClass(int column)
+            {
+                switch (column)
+                {
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return String.class;
+                    case 3:
+                        return String.class;
+                    case 4:
+                        return Boolean.class;
+
+                    default:
+                        return String.class;
+                }
+            }
+        };
+
         table1 = new JTable(model);
 
         model.addColumn("marka");
@@ -50,6 +74,18 @@ public class CarList extends JFrame {
         model.addColumn("silnik");
         model.addColumn("kategoria");
         model.addColumn("wypożyczony");
+
+        List<Car> list = db_connection.listCars();
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++){
+            row[0] = list.get(i).getBrand();
+            row[1] = list.get(i).getModel();
+            row[2] = list.get(i).getEngine();
+            row[3] = list.get(i).getCat();
+            row[4] = list.get(i).getRented();
+            model.addRow(row);
+        }
+
 
         JScrollPane jScrollPane = new JScrollPane(table1);
         table1.setVisible(true);

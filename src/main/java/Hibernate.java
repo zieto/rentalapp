@@ -1,14 +1,17 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Date;
-import java.util.Iterator;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
+@SuppressWarnings("Duplicates")
 public class Hibernate {
     private static SessionFactory factory;
     {
@@ -137,12 +140,131 @@ public class Hibernate {
         return cli;
     }
 
+    /* Method to READ all rentals */
+    public List<Rent> listRents( ){
+        List<Rent> ren = new LinkedList<Rent>();
+        Session session = factory.openSession();
+        Transaction tx = null;
+        String model, kName, kLastName, pName, pLastName;
+        Date rent_date, ret_date;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT NEW Rent(s.model, k.firstName, k.lastName, p.firstName, p.lastName, w.rent_date, w.return_date) FROM Rent w, Employee p, Car s, Client k WHERE w.client_id=k.id AND w.car_id=s.id AND w.employee_id=p.id";
+            final List<Rent> rents = session.createQuery(hql, Rent.class).list();
+            for (Iterator iterator = rents.iterator(); iterator.hasNext();){
+                Rent rent = (Rent) iterator.next();
+                model = rent.getModel();
+                kName = rent.getkName();
+                kLastName = rent.getkLastName();
+                pName = rent.getpName();
+                pLastName = rent.getpLastName();
+                rent_date = rent.getRent_date();
+                ret_date = rent.getReturn_date();
+                ren.add(new Rent(model, kName, kLastName, pName, pLastName, rent_date, ret_date));
+             }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ren;
+    }
+
+    /* Method to READ all cars */
+    public List<Car> listCars( ){
+        List<Car> ren = new LinkedList<Car>();
+        Session session = factory.openSession();
+        Transaction tx = null;
+        String cat, brand, model, engine;
+        Boolean rented;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT NEW Car(k.name, s.brand, s.model, s.engine, s.rented) FROM Car s, CarCategory k WHERE k.id=s.cat_id";
+            final List<Car> cars = session.createQuery(hql, Car.class).list();
+            for (Iterator iterator = cars.iterator(); iterator.hasNext();){
+                Car c = (Car) iterator.next();
+                cat = c.getCat();
+                brand = c.getBrand();
+                model = c.getModel();
+                engine = c.getEngine();
+                rented = c.getRented();
+                ren.add(new Car(cat, brand, model, engine, rented));
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ren;
+    }
+
+    /* Method to READ available cars */
+    public List<Car> listAvailableCars( ){
+        List<Car> ren = new LinkedList<Car>();
+        Session session = factory.openSession();
+        Transaction tx = null;
+        String cat, brand, model, engine;
+        Boolean rented;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT NEW Car(k.name, s.brand, s.model, s.engine, s.rented) FROM Car s, CarCategory k WHERE k.id=s.cat_id AND s.rented=false";
+            final List<Car> cars = session.createQuery(hql, Car.class).list();
+            for (Iterator iterator = cars.iterator(); iterator.hasNext();){
+                Car c = (Car) iterator.next();
+                cat = c.getCat();
+                brand = c.getBrand();
+                model = c.getModel();
+                engine = c.getEngine();
+                rented = c.getRented();
+                ren.add(new Car(cat, brand, model, engine, rented));
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ren;
+    }
+
+    /* Method to READ all car categories */
+    public List<CarCategory> listCarCategories( ){
+        List<CarCategory> ren = new LinkedList<CarCategory>();
+        Session session = factory.openSession();
+        Transaction tx = null;
+        String name, desc, pName, pLastName;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT NEW CarCategory(k.name, k.desc, p.firstName, p.lastName) FROM Employee p, CarCategory k WHERE k.admin_id=p.id";
+            final List<CarCategory> cars = session.createQuery(hql, CarCategory.class).list();
+            for (Iterator iterator = cars.iterator(); iterator.hasNext();){
+                CarCategory c = (CarCategory) iterator.next();
+                name = c.getName();
+                desc = c.getDesc();
+                pName = c.getpName();
+                pLastName = c.getpLastName();
+                ren.add(new CarCategory(name, desc, pName, pLastName));
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ren;
+    }
+
     /* Method to CREATE a client in the database */
     public Integer addClient(String fname, String lname, String tel, String email){
         Session session = factory.openSession();
         Transaction tx = null;
         Integer clientID = null;
-
         try {
             tx = session.beginTransaction();
             Client client = new Client(fname, lname, tel, email);
@@ -155,6 +277,89 @@ public class Hibernate {
             session.close();
         }
         return clientID;
+    }
+
+    /* Method to CREATE a car in the database */
+    public Integer addCar(String brand, String model, String engine, String cat){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer carID = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT id FROM CarCategory WHERE name = :name";
+            Query cc = session.createQuery(hql).setParameter("name", cat);
+            int result = ((Number)cc.getSingleResult()).intValue();
+            Car car = new Car(result, brand, model, engine, false);
+            carID = (Integer) session.save(car);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return carID;
+    }
+
+    /* Method to CREATE a car category in the database */
+    public Integer addCarCategory(String name, String desc, String pName, String pLastName){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer carID = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT id FROM Employee WHERE firstName = :firstname AND lastName = :lastname";
+            Query cc = session.createQuery(hql).setParameter("firstname", pName).setParameter("lastname", pLastName);
+            int result = ((Number)cc.getSingleResult()).intValue();
+            CarCategory carCategory = new CarCategory(result, name, desc);
+            carID = (Integer) session.save(carCategory);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return carID;
+    }
+
+    /* Method to RENT a car */
+    public Integer addRent(String carBrand, String carModel, String empName, String empLastName, String cliName, String cliLastName, int days){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer rentID = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT id FROM Employee WHERE firstName = :firstname AND lastName = :lastname";
+            Query getEmpID = session.createQuery(hql).setParameter("firstname", empName).setParameter("lastname", empLastName);
+            int employeeID = ((Number)getEmpID.getSingleResult()).intValue();
+
+            String hql2 = "SELECT id FROM Client WHERE firstName = :firstname AND lastName = :lastname";
+            Query getCliID = session.createQuery(hql2).setParameter("firstname", cliName).setParameter("lastname", cliLastName);
+            int clientID = ((Number)getCliID.getSingleResult()).intValue();
+
+            String hql3 = "SELECT id FROM Car WHERE model = :model AND brand = :brand";
+            Query getCarID = session.createQuery(hql3).setParameter("brand", carBrand).setParameter("model", carModel);
+            int carID = ((Number)getCarID.getSingleResult()).intValue();
+
+
+            Date current_date = java.util.Calendar.getInstance().getTime();
+            Calendar c = Calendar.getInstance();
+            c.setTime(current_date);
+            c.add(Calendar.DAY_OF_YEAR, days);
+            Date end_date = c.getTime();
+            System.out.println(end_date);
+
+            Rent rent = new Rent(carID, clientID, employeeID, current_date, end_date);
+            rentID = (Integer) session.save(rent);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return rentID;
     }
 
 }

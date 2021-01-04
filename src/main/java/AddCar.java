@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class AddCar extends JFrame {
     private JButton cancelButton;
@@ -13,7 +14,7 @@ public class AddCar extends JFrame {
 
     public AddCar(){
 
-        Hibernate db_connection = new Hibernate();
+        final Hibernate db_connection = new Hibernate();
 
         setVisible(true);
         setTitle("Dodaj samochód");
@@ -31,8 +32,12 @@ public class AddCar extends JFrame {
         engineComboBox.addItem("hybrydowy");
         engineComboBox.addItem("elektryczny");
 
-        //TODO
-        //categoryComboBox.addItem("");
+        List<CarCategory> list = db_connection.listCarCategories();
+        Object[] row = new Object[1];
+        for (int i = 0; i < list.size(); i++){
+            row[0] = list.get(i).getName();
+            categoryComboBox.addItem(row[0]);
+        }
 
 
         cancelButton.addActionListener(new ActionListener() {
@@ -43,7 +48,15 @@ public class AddCar extends JFrame {
 
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //TODO
+                String brand = brandTextField.getText();
+                String model = modelTextField.getText();
+                String engine = (String) engineComboBox.getSelectedItem();
+                String cat = (String) categoryComboBox.getSelectedItem();
+
+                db_connection.addCar(brand, model, engine, cat);
+
+                JOptionPane.showMessageDialog(null, "Dodano nowy samochód!");
+                dispose();
             }
         });
 
