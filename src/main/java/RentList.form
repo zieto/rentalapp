@@ -28,6 +28,12 @@
               <text value="Nowy klient"/>
             </properties>
           </component>
+          <component id="925c0" class="javax.swing.JButton" binding="carsButton">
+            <constraints/>
+            <properties>
+              <text value="Samochody"/>
+            </properties>
+          </component>
           <grid id="adce5" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints/>
             <properties/>
@@ -47,6 +53,12 @@
               </component>
             </children>
           </grid>
+          <component id="519dd" class="javax.swing.JButton" binding="refreshButton">
+            <constraints/>
+            <properties>
+              <text value="Odśwież"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

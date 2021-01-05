@@ -73,7 +73,7 @@ public class AddRent extends JFrame {
 
                 db_connection.addRent(car_split[0], car_split[1], ef_split[0], ef_split[1], cf_split[0], cf_split[1], days);
 
-                JOptionPane.showMessageDialog(null, "Dodano nową kategorię!");
+                JOptionPane.showMessageDialog(null, "Pomyślnie wynajęto pojazd!");
                 dispose();
             }
         });

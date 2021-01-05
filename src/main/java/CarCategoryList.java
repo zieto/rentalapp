@@ -10,6 +10,7 @@ public class CarCategoryList extends JFrame{
     private JButton cancelButton;
     private JButton addButton;
     private JButton deleteButton;
+    private JButton refreshButton;
 
     public CarCategoryList(){
 
@@ -54,6 +55,25 @@ public class CarCategoryList extends JFrame{
         JScrollPane jScrollPane = new JScrollPane(table1);
         table1.setVisible(true);
         add(jScrollPane);
+
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (model.getRowCount() > 0) {
+                    for (int j = model.getRowCount() - 1; j > -1; j--) {
+                        model.removeRow(j);
+                    }
+                }
+                List<CarCategory> list = db_connection.listCarCategories();
+                Object[] row = new Object[3];
+                for (int i = 0; i < list.size(); i++){
+                    row[0] = list.get(i).getName();
+                    row[1] = list.get(i).getDesc();
+                    row[2] = list.get(i).getpName() + " " + list.get(i).getpLastName();
+                    model.addRow(row);
+                }
+            }
+        });
 
     }
 }

@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 public class RentList extends JFrame {
@@ -11,6 +12,8 @@ public class RentList extends JFrame {
     private JButton addButton;
     private JButton deleteButton;
     private JButton addClientButton;
+    private JButton refreshButton;
+    private JButton carsButton;
 
 
     public RentList(){
@@ -43,6 +46,13 @@ public class RentList extends JFrame {
             }
         });
 
+        carsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CarList();
+            }
+        });
+
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //TODO
@@ -72,6 +82,53 @@ public class RentList extends JFrame {
         JScrollPane jScrollPane = new JScrollPane(table1);
         table1.setVisible(true);
         add(jScrollPane);
+
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (model.getRowCount() > 0){
+                    for (int j=model.getRowCount() -1; j>-1; j--){
+                        model.removeRow(j);
+                    }
+                }
+                List<Rent> list = db_connection.listRents();
+                for (int i = 0; i < list.size(); i++){
+                    row[0] = list.get(i).getModel();
+                    row[1] = list.get(i).getkName() +" "+ list.get(i).getkLastName();
+                    row[2] = list.get(i).getpName() +" "+ list.get(i).getpLastName();
+                    row[3] = list.get(i).getRent_date();
+                    row[4] = list.get(i).getReturn_date();
+                    model.addRow(row);
+                }
+
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = table1.getSelectedRow();
+                String carModel = (String) table1.getValueAt(index, 0);
+                String kFullname = (String) table1.getValueAt(index, 1);
+                String kf_split[] = kFullname.split(" ");
+                String pFullname = (String) table1.getValueAt(index, 2);
+                String pf_split[] = pFullname.split(" ");
+                Date rent_dt = (Date) table1.getValueAt(index, 3);
+                Date ret_dt = (Date) table1.getValueAt(index, 4);
+
+                int cd = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz usunąć zaznaczoną pozycję?");
+                switch (cd){
+                    case 0:
+                        model.removeRow(index);
+                        db_connection.deleteRent(carModel, kf_split[0], kf_split[1], pf_split[0], pf_split[1], rent_dt, ret_dt);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                }
+            }
+        });
 
     }
 

@@ -41,6 +41,12 @@
               </component>
             </children>
           </grid>
+          <component id="110c7" class="javax.swing.JButton" binding="refreshButton">
+            <constraints/>
+            <properties>
+              <text value="Odśwież"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

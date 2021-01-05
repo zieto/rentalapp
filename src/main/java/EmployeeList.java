@@ -62,5 +62,73 @@ public class EmployeeList extends JFrame{
         table1.setVisible(true);
         add(jScrollPane);
 
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (model.getRowCount() > 0){
+                    for (int j=model.getRowCount() -1; j>-1; j--){
+                        model.removeRow(j);
+                    }
+                }
+
+                String name = textFieldName.getText();
+                String surname = textFieldSurname.getText();
+                List<Employee> list = db_connection.listEmployees();
+
+                for (int i = 0; i < list.size(); i++){
+                    row[0] = list.get(i).getFirstName();
+                    row[1] = list.get(i).getLastName();
+                    row[2] = list.get(i).getTelephone();
+                    row[3] = list.get(i).getSalary();
+
+                    if (name.length()==0 && surname.length()==0){
+                        model.addRow(row);
+                    }
+
+                    if (name.length()>0 && surname.length()==0){
+                        if (row[0].equals(name)){
+                            model.addRow(row);
+                        }
+                    }
+
+                    if (name.length()==0 && surname.length()>0){
+                        if (row[1].equals(surname)){
+                            model.addRow(row);
+                        }
+                    }
+
+                    if (name.length()>0 && surname.length()>0){
+                        if(row[0].equals(name) && row[1].equals(surname)){
+                            model.addRow(row);
+                        }
+                    }
+                }
+
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = table1.getSelectedRow();
+                String name = (String) table1.getValueAt(index, 0);
+                String surname = (String) table1.getValueAt(index, 1);
+                String telephone = (String) table1.getValueAt(index, 2);
+                int salary = (int) table1.getValueAt(index, 3);
+
+                int cd = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz usunąć zaznaczonego pracownika?");
+                switch (cd){
+                    case 0:
+                        model.removeRow(index);
+                        db_connection.deleteEmployee(name, surname, telephone, salary);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                }
+            }
+        });
+
     }
 }

@@ -45,7 +45,7 @@
           <component id="43b5d" class="javax.swing.JButton" binding="searchButton">
             <constraints/>
             <properties>
-              <text value="Szukaj"/>
+              <text value="Szukaj/Odśwież"/>
             </properties>
           </component>
           <grid id="665e3" layout-manager="BorderLayout" hgap="0" vgap="0">

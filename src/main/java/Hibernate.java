@@ -74,16 +74,17 @@ public class Hibernate {
         return emp;
     }
 
-    /* Method to UPDATE salary for an employee */
-    public void updateEmployee(Integer EmployeeID, int salary ){
+    /* Method to DELETE an employee from the records */
+    public void deleteEmployee(String name, String surname, String telephone, int salary){
         Session session = factory.openSession();
         Transaction tx = null;
-
         try {
+            String hql = "SELECT id FROM Employee WHERE firstName = :firstname AND lastName = :lastname AND telephone = :telephone AND salary = :salary";
+            Query getEmpID = session.createQuery(hql).setParameter("firstname", name).setParameter("lastname", surname).setParameter("telephone", telephone).setParameter("salary", salary);
+            int EmployeeID = ((Number)getEmpID.getSingleResult()).intValue();
             tx = session.beginTransaction();
-            Employee employee = (Employee)session.get(Employee.class, EmployeeID);
-            employee.setSalary( salary );
-            session.update(employee);
+            Employee employee = session.get(Employee.class, EmployeeID);
+            session.delete(employee);
             tx.commit();
         } catch (HibernateException e) {
             if (tx!=null) tx.rollback();
@@ -93,15 +94,60 @@ public class Hibernate {
         }
     }
 
-    /* Method to DELETE an employee from the records */
-    public void deleteEmployee(Integer EmployeeID){
+    /* Method to DELETE a client from the records */
+    public void deleteClient(String name, String surname, String telephone, String email){
         Session session = factory.openSession();
         Transaction tx = null;
-
         try {
+            String hql = "SELECT id FROM Client WHERE firstName = :firstname AND lastName = :lastname AND telephone = :telephone AND email = :email";
+            Query getCliID = session.createQuery(hql).setParameter("firstname", name).setParameter("lastname", surname).setParameter("telephone", telephone).setParameter("email", email);
+            int ClientID = ((Number)getCliID.getSingleResult()).intValue();
             tx = session.beginTransaction();
-            Employee employee = (Employee)session.get(Employee.class, EmployeeID);
-            session.delete(employee);
+            Client client = session.get(Client.class, ClientID);
+            session.delete(client);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    /* Method to DELETE a car from the records */
+    public void deleteCar(String brand, String model, String engine, String category, Boolean rented){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            String hql = "SELECT c.id FROM Car c, CarCategory cc WHERE c.brand = :brand AND c.model = :model AND c.engine = :engine AND c.rented = :rented AND c.cat_id = cc.id AND cc.name = :ccname";
+            Query getCarID = session.createQuery(hql).setParameter("brand", brand).setParameter("model", model).setParameter("engine", engine).setParameter("ccname", category).setParameter("rented",rented);
+            int CarID = ((Number)getCarID.getSingleResult()).intValue();
+            tx = session.beginTransaction();
+            Car car = session.get(Car.class, CarID);
+            session.delete(car);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    /* Method to DELETE rent from the records */
+    public void deleteRent(String model, String kName, String kSurname, String pName, String pSurname, Date rent_date, Date ret_date){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            String hql = "SELECT r.id FROM Rent r, Car c, Client cli, Employee e WHERE r.car_id=c.id AND r.client_id=cli.id AND r.employee_id=e.id AND r.rent_date = :rentdt AND r.return_date = :retdt" +
+                    " AND c.model = :model AND cli.firstName = :kname AND cli.lastName = :ksurname AND e.firstName = :pname AND e.lastName = :psurname";
+            Query getRentID = session.createQuery(hql).setParameter("model", model).setParameter("kname", kName)
+                    .setParameter("ksurname", kSurname).setParameter("pname", pName).setParameter("psurname", pSurname)
+                    .setParameter("rentdt", rent_date).setParameter("retdt", ret_date);
+            int RentID = ((Number)getRentID.getSingleResult()).intValue();
+            tx = session.beginTransaction();
+            Rent rent = session.get(Rent.class, RentID);
+            session.delete(rent);
             tx.commit();
         } catch (HibernateException e) {
             if (tx!=null) tx.rollback();
