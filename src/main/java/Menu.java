@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 public class Menu extends JFrame{
     private JButton exitButton;
     private JPanel PanelMenu;
+    private JButton categoriesButton;
     private JButton rentButton;
     private JButton employeesButton;
     private JButton carsButton;
@@ -14,7 +15,6 @@ public class Menu extends JFrame{
 
 
         exitButton.addActionListener(new ActionListener() {
-            //@Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
@@ -41,6 +41,12 @@ public class Menu extends JFrame{
         rentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new RentList();
+            }
+        });
+
+        categoriesButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CarCategoryList();
             }
         });
 
