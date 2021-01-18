@@ -1,7 +1,3 @@
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 import org.hibernate.HibernateException;
@@ -394,7 +390,41 @@ public class Hibernate {
             c.setTime(current_date);
             c.add(Calendar.DAY_OF_YEAR, days);
             Date end_date = c.getTime();
-            System.out.println(end_date);
+
+            Rent rent = new Rent(carID, clientID, employeeID, current_date, end_date);
+            rentID = (Integer) session.save(rent);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return rentID;
+    }
+
+    /* Method to RENT a car from client's view*/
+    public Integer addClientRent(String carBrand, String carModel, int clientID, int days){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer rentID = null;
+        try {
+            tx = session.beginTransaction();
+
+            String hql = "SELECT id FROM Employee ORDER BY RAND()";
+            Query getEmpID = session.createQuery(hql);
+            getEmpID.setMaxResults(1);
+            int employeeID = ((Number)getEmpID.getSingleResult()).intValue();
+
+            String hql2 = "SELECT id FROM Car WHERE model = :model AND brand = :brand";
+            Query getCarID = session.createQuery(hql2).setParameter("brand", carBrand).setParameter("model", carModel);
+            int carID = ((Number)getCarID.getSingleResult()).intValue();
+
+            Date current_date = java.util.Calendar.getInstance().getTime();
+            Calendar c = Calendar.getInstance();
+            c.setTime(current_date);
+            c.add(Calendar.DAY_OF_YEAR, days);
+            Date end_date = c.getTime();
 
             Rent rent = new Rent(carID, clientID, employeeID, current_date, end_date);
             rentID = (Integer) session.save(rent);

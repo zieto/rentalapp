@@ -10,10 +10,10 @@ public class CarList extends JFrame {
     private JButton cancelButton;
     private JComboBox categoryComboBox;
     private JButton addButton;
-    private JButton categoryButton;
     private JButton searchButton;
     private JComboBox rentedComboBox;
     private JButton deleteButton;
+    private JComboBox engineComboBox;
 
     public CarList() {
 
@@ -33,11 +33,6 @@ public class CarList extends JFrame {
             }
         });
 
-        categoryButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new CarCategoryList();
-            }
-        });
 
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -97,6 +92,12 @@ public class CarList extends JFrame {
         rentedComboBox.addItem("wolne");
         rentedComboBox.addItem("wypożyczone");
 
+        engineComboBox.addItem("wszystkie");
+        engineComboBox.addItem("benzynowy");
+        engineComboBox.addItem("diesel");
+        engineComboBox.addItem("hybrydowy");
+        engineComboBox.addItem("elektryczny");
+
         List<CarCategory> cclist = db_connection.listCarCategories();
         Object[] ccrow = new Object[1];
         for (int i = 0; i < cclist.size(); i++){
@@ -117,6 +118,7 @@ public class CarList extends JFrame {
                 List<Car> list = db_connection.listCars();
                 Object ccb = categoryComboBox.getSelectedItem();
                 Object rcb = rentedComboBox.getSelectedItem();
+                Object ecb = engineComboBox.getSelectedItem();
 
                 if (rcb.equals("wolne")){
                     rcb = false;
@@ -133,24 +135,48 @@ public class CarList extends JFrame {
                     row[3] = list.get(i).getCat();
                     row[4] = list.get(i).getRented();
 
-                    if (rcb.equals(all) && ccb.equals(all)){
+                    if (rcb.equals(all) && ccb.equals(all) && ecb.equals(all)){
                         model.addRow(row);
                     }
 
-                    if (!rcb.equals(all) && ccb.equals(all)){
+                    if (!rcb.equals(all) && ccb.equals(all) && ecb.equals(all)){
                         if (row[4].equals(rcb)){
                             model.addRow(row);
                         }
                     }
 
-                    if (rcb.equals(all) && !ccb.equals(all)){
+                    if (rcb.equals(all) && !ccb.equals(all) && ecb.equals(all)){
                         if (row[3].equals(ccb)){
                             model.addRow(row);
                         }
                     }
 
-                    if (!rcb.equals(all) && !ccb.equals(all)){
-                        if (row[3].equals(ccb) && row[4].equals(rcb)){
+                    if (rcb.equals(all) && ccb.equals(all) && !ecb.equals(all)){
+                        if (row[2].equals(ccb)){
+                            model.addRow(row);
+                        }
+                    }
+
+                    if (!rcb.equals(all) && !ccb.equals(all) && ecb.equals(all)) {
+                        if (row[3].equals(ccb) && row[4].equals(rcb)) {
+                            model.addRow(row);
+                        }
+                    }
+
+                    if (rcb.equals(all) && !ccb.equals(all) && !ecb.equals(all)){
+                        if (row[3].equals(ccb) && row[2].equals(ecb)){
+                            model.addRow(row);
+                        }
+                    }
+
+                    if (!rcb.equals(all) && ccb.equals(all) && !ecb.equals(all)){
+                        if (row[4].equals(rcb) && row[2].equals(ecb)){
+                            model.addRow(row);
+                        }
+                    }
+
+                    if (!rcb.equals(all) && !ccb.equals(all) && !ecb.equals(all)){
+                        if (row[3].equals(ccb) && row[4].equals(rcb) && row[2].equals(ecb)){
                             model.addRow(row);
                         }
                     }

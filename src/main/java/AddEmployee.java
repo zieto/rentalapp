@@ -42,10 +42,15 @@ public class AddEmployee extends JFrame{
                 String s = salaryTextField.getText();
                 int salary = Integer.parseInt(s);
 
-                db_connection.addEmployee(name,surname,telephone,salary);
+                if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty() || salaryTextField.getText().isEmpty() || telephoneTextField.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    db_connection.addEmployee(name, surname, telephone, salary);
 
-                JOptionPane.showMessageDialog(null, "Dodano nowego pracownika!");
-                dispose();
+                    JOptionPane.showMessageDialog(null, "Dodano nowego pracownika!");
+                    dispose();
+                }
             }
         });
 

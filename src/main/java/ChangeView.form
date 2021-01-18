@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ChangeView">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="6276b" class="javax.swing.JButton" binding="clientButton">
+        <constraints/>
+        <properties>
+          <text value="Klient"/>
+        </properties>
+      </component>
+      <component id="5c275" class="javax.swing.JButton" binding="adminButton">
+        <constraints/>
+        <properties>
+          <text value="Kierownik"/>
+        </properties>
+      </component>
+      <component id="25479" class="javax.swing.JButton" binding="employeeButton">
+        <constraints/>
+        <properties>
+          <text value="Pracownik"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

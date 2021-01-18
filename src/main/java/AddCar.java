@@ -53,10 +53,15 @@ public class AddCar extends JFrame {
                 String engine = (String) engineComboBox.getSelectedItem();
                 String cat = (String) categoryComboBox.getSelectedItem();
 
-                db_connection.addCar(brand, model, engine, cat);
+                if (brandTextField.getText().isEmpty() || modelTextField.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    db_connection.addCar(brand, model, engine, cat);
+                    JOptionPane.showMessageDialog(null, "Dodano nowy samochód!");
+                    dispose();
+                }
 
-                JOptionPane.showMessageDialog(null, "Dodano nowy samochód!");
-                dispose();
             }
         });
 

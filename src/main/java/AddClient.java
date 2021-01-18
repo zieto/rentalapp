@@ -41,10 +41,15 @@ public class AddClient extends JFrame {
                 String email = emailTextField.getText();
                 String telephone = telephoneTextField.getText();
 
-                db_connection.addClient(name, surname, telephone, email);
+                if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || telephoneTextField.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    db_connection.addClient(name, surname, telephone, email);
 
-                JOptionPane.showMessageDialog(null, "Dodano nowego klienta!");
-                dispose();
+                    JOptionPane.showMessageDialog(null, "Dodano nowego klienta!");
+                    dispose();
+                }
 
             }
         });

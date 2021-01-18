@@ -71,10 +71,15 @@ public class AddRent extends JFrame {
                 String daysString = textField1.getText();
                 int days = Integer.parseInt(daysString);
 
-                db_connection.addRent(car_split[0], car_split[1], ef_split[0], ef_split[1], cf_split[0], cf_split[1], days);
+                if (textField1.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Podaj liczbę dni!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    db_connection.addRent(car_split[0], car_split[1], ef_split[0], ef_split[1], cf_split[0], cf_split[1], days);
 
-                JOptionPane.showMessageDialog(null, "Pomyślnie wynajęto pojazd!");
-                dispose();
+                    JOptionPane.showMessageDialog(null, "Pomyślnie wynajęto pojazd!");
+                    dispose();
+                }
             }
         });
 
