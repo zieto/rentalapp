@@ -13,6 +13,7 @@ public class ClientList extends JFrame{
     private JButton searchButton;
     private JButton addButton;
     private JButton deleteButton;
+    private JButton editButton;
 
     public ClientList(){
 
@@ -127,6 +128,20 @@ public class ClientList extends JFrame{
                     case 2:
                         break;
                 }
+            }
+        });
+
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = table2.getSelectedRow();
+                String name = (String) table2.getValueAt(index, 0);
+                String surname = (String) table2.getValueAt(index, 1);
+                String telephone = (String) table2.getValueAt(index, 2);
+                String email = (String) table2.getValueAt(index, 3);
+
+                new UpdateClient(name, surname, email, telephone);
+
             }
         });
 

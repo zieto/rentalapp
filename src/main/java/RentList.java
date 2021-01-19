@@ -14,6 +14,7 @@ public class RentList extends JFrame {
     private JButton addClientButton;
     private JButton refreshButton;
     private JButton carsButton;
+    private JButton editButton;
 
 
     public RentList(){
@@ -127,6 +128,21 @@ public class RentList extends JFrame {
                     case 2:
                         break;
                 }
+            }
+        });
+
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = table1.getSelectedRow();
+                String carModel = (String) table1.getValueAt(index, 0);
+                String kFullname = (String) table1.getValueAt(index, 1);
+                String kf_split[] = kFullname.split(" ");
+                String pFullname = (String) table1.getValueAt(index, 2);
+                String pf_split[] = pFullname.split(" ");
+                Date rent_dt = (Date) table1.getValueAt(index, 3);
+                Date ret_dt = (Date) table1.getValueAt(index, 4);
+                new UpdateRent(kf_split[0], kf_split[1], pf_split[0], pf_split[1], carModel, rent_dt, ret_dt);
             }
         });
 

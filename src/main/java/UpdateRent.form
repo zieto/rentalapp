@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="UpdateRent">
+  <grid id="27dc6" binding="panel1" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="649" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="95d38" class="javax.swing.JButton" binding="cancelButton">
+        <constraints/>
+        <properties>
+          <text value="Anuluj"/>
+        </properties>
+      </component>
+      <component id="62d24" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Pracownik:"/>
+        </properties>
+      </component>
+      <component id="6e28d" class="javax.swing.JComboBox" binding="employeeComboBox">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="e8af0" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Data wypożyczenia:"/>
+        </properties>
+      </component>
+      <component id="5a300" class="javax.swing.JTextField" binding="rentDateTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="5a067" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Data zwrotu:"/>
+        </properties>
+      </component>
+      <component id="ead77" class="javax.swing.JTextField" binding="returnDateTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="6f691" class="javax.swing.JButton" binding="updateButton">
+        <constraints/>
+        <properties>
+          <text value="Zapisz"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

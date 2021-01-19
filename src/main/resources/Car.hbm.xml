@@ -13,7 +13,6 @@
         <id name = "id" type = "int" column = "id">
             <generator class="native"/>
         </id>
-
         <property name = "cat_id" column = "id_kategorii" type = "int"/>
         <property name = "brand" column = "marka" type = "string"/>
         <property name = "model" column = "model" type = "string"/>

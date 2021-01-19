@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="UpdateCar">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="682" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="ef791" class="javax.swing.JButton" binding="cancelButton">
+        <constraints/>
+        <properties>
+          <text value="Anuluj"/>
+        </properties>
+      </component>
+      <component id="ee19f" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Marka:"/>
+        </properties>
+      </component>
+      <component id="da304" class="javax.swing.JTextField" binding="brandTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="f872a" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Model:"/>
+        </properties>
+      </component>
+      <component id="fbdc0" class="javax.swing.JTextField" binding="modelTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="ba049" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Silnik:"/>
+        </properties>
+      </component>
+      <component id="29c4" class="javax.swing.JComboBox" binding="engineComboBox">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="f2be8" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Kategoria:"/>
+        </properties>
+      </component>
+      <component id="ed3" class="javax.swing.JComboBox" binding="categoryComboBox">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="f9489" class="javax.swing.JButton" binding="updateButton">
+        <constraints/>
+        <properties>
+          <text value="Zapisz"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

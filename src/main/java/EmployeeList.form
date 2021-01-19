@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="EmployeeList">
   <grid id="27dc6" binding="EmployeePanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="604" height="400"/>
+      <xy x="20" y="20" width="685" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -54,13 +54,19 @@
             <border type="none"/>
             <children>
               <component id="32943" class="javax.swing.JButton" binding="addButton">
-                <constraints border-constraint="West"/>
+                <constraints border-constraint="South"/>
                 <properties>
                   <text value="Dodaj"/>
                 </properties>
               </component>
+              <component id="cdf58" class="javax.swing.JButton" binding="editButton">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <text value="Edytuj"/>
+                </properties>
+              </component>
               <component id="cf0db" class="javax.swing.JButton" binding="deleteButton">
-                <constraints border-constraint="South"/>
+                <constraints border-constraint="West"/>
                 <properties>
                   <text value="Usuń"/>
                 </properties>

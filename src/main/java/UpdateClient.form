@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="UpdateClient">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="625" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="5fde7" class="javax.swing.JButton" binding="cancelButton">
+        <constraints/>
+        <properties>
+          <text value="Anuluj"/>
+        </properties>
+      </component>
+      <component id="596ac" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Imię:"/>
+        </properties>
+      </component>
+      <component id="a11d2" class="javax.swing.JTextField" binding="nameTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="d7c05" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Nazwisko:"/>
+        </properties>
+      </component>
+      <component id="fb266" class="javax.swing.JTextField" binding="surnameTextField">
+        <constraints/>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="3539d" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="Telefon:"/>
+        </properties>
+      </component>
+      <component id="ed3da" class="javax.swing.JTextField" binding="telephoneTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="bf963" class="javax.swing.JLabel">
+        <constraints/>
+        <properties>
+          <text value="E-mail:"/>
+        </properties>
+      </component>
+      <component id="11669" class="javax.swing.JTextField" binding="emailTextField">
+        <constraints/>
+        <properties/>
+      </component>
+      <component id="e4ac2" class="javax.swing.JButton" binding="updateButton">
+        <constraints/>
+        <properties>
+          <text value="Zapisz"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

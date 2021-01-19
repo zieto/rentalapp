@@ -9,11 +9,12 @@ public class CarList extends JFrame {
     private JPanel ClientPanel;
     private JButton cancelButton;
     private JComboBox categoryComboBox;
-    private JButton addButton;
+    private JButton editButton;
     private JButton searchButton;
     private JComboBox rentedComboBox;
     private JButton deleteButton;
     private JComboBox engineComboBox;
+    private JButton addButton;
 
     public CarList() {
 
@@ -25,7 +26,7 @@ public class CarList extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         pack();
-        setSize(700,400);
+        setSize(850,500);
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -204,6 +205,27 @@ public class CarList extends JFrame {
                         break;
                     case 2:
                         break;
+                }
+            }
+        });
+
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = table1.getSelectedRow();
+                String brand = (String) table1.getValueAt(index, 0);
+                String carModel = (String) table1.getValueAt(index, 1);
+                String engine = (String) table1.getValueAt(index, 2);
+                String category = (String) table1.getValueAt(index, 3);
+                Boolean rented = (Boolean) table1.getValueAt(index, 4);
+
+                if (rented){
+                    JOptionPane.showMessageDialog(null, "Nie można edytować wynajętego samochodu!", "Błąd", JOptionPane.ERROR_MESSAGE);
+
+                }
+
+                else {
+                    new UpdateCar(brand, carModel, engine, category);
                 }
             }
         });

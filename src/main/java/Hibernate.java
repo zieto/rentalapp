@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.hibernate.HibernateException;
@@ -436,6 +437,135 @@ public class Hibernate {
             session.close();
         }
         return rentID;
+    }
+
+    /* Method to EDIT a car in the database */
+    public void updateCar(String brand, String model, String engine, String cat, String newBrand, String newModel, String newEngine, String newCat){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String hql = "SELECT id FROM CarCategory WHERE name = :name";
+            Query cc = session.createQuery(hql).setParameter("name", cat);
+            int result = ((Number)cc.getSingleResult()).intValue();
+
+            String hql2 = "SELECT id FROM CarCategory WHERE name = :name";
+            Query cc2 = session.createQuery(hql2).setParameter("name", newCat);
+            int newResult = ((Number)cc2.getSingleResult()).intValue();
+
+            String hql3 = "SELECT id From Car WHERE brand = :brand AND model = :model AND engine = :engine AND cat_id = :catid";
+            Query cc3 = session.createQuery(hql3).setParameter("brand", brand).setParameter("model", model).setParameter("engine", engine).setParameter("catid", result);
+            int carID = ((Number)cc3.getSingleResult()).intValue();
+
+            Car car = new Car(newResult, newBrand, newModel, newEngine, false);
+            car.setId(carID);
+            session.saveOrUpdate(car);
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    /* Method to EDIT client's info in the database */
+    public void updateClient(String oldName, String oldSurname, String oldEmail, String oldTelephone, String newName, String newSurname, String newEmail, String newTelephone){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+
+            String hql = "SELECT id From Client WHERE firstName = :fname AND lastName = :lname AND email = :email AND telephone = :tele";
+            Query cc = session.createQuery(hql).setParameter("fname", oldName).setParameter("lname", oldSurname).setParameter("email", oldEmail).setParameter("tele", oldTelephone);
+            int clientID = ((Number)cc.getSingleResult()).intValue();
+
+            Client client = new Client(newName, newSurname, newTelephone, newEmail);
+            client.setId(clientID);
+            session.saveOrUpdate(client);
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    /* Method to EDIT employee's info in the database */
+    public void updateEmployee(String oldName, String oldSurname, String oldTelephone, int oldSalary, String newName, String newSurname, String newTelephone, int newSalary){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+
+            String hql = "SELECT id From Employee WHERE firstName = :fname AND lastName = :lname AND salary = :salary AND telephone = :tele";
+            Query cc = session.createQuery(hql).setParameter("fname", oldName).setParameter("lname", oldSurname).setParameter("salary", oldSalary).setParameter("tele", oldTelephone);
+            int employeeID = ((Number)cc.getSingleResult()).intValue();
+
+            Employee employee = new Employee(newName, newSurname, newTelephone, newSalary);
+            employee.setId(employeeID);
+            session.saveOrUpdate(employee);
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    /* Method to EDIT rent info in the database */
+    public void updateRent(String cname, String clastname, String eoldname, String eoldsurname, String enewname, String enewsurname, String model, Date oldRentDate, Date oldReturnDate, String newRentDate, String newReturnDate){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+
+            String hql = "SELECT r.id FROM Rent r, Employee e, Client c, Car car WHERE r.employee_id=e.id AND r.client_id=c.id AND r.car_id=car.id " +
+                    "AND e.firstName = :eoldname AND e.lastName = :eoldsurname AND car.model = :model AND c.firstName = :cname AND c.lastName = :clastname " +
+                    "AND r.rent_date = :oldrentdt AND r.return_date = :oldreturndt";
+            Query cc = session.createQuery(hql).setParameter("eoldname", eoldname).setParameter("eoldsurname", eoldsurname).setParameter("model", model)
+                    .setParameter("cname", cname).setParameter("clastname", clastname).setParameter("oldrentdt", oldRentDate)
+                    .setParameter("oldreturndt", oldReturnDate);
+            int rentID = ((Number)cc.getSingleResult()).intValue();
+
+            String ehql = "SELECT id From Employee WHERE firstName = :fname AND lastName = :lname";
+            Query ecc = session.createQuery(ehql).setParameter("fname", enewname).setParameter("lname", enewsurname);
+            int employeeID = ((Number)ecc.getSingleResult()).intValue();
+
+            String client_hql = "SELECT id From Client WHERE firstName = :fname AND lastName = :lname";
+            Query clientcc = session.createQuery(client_hql).setParameter("fname", cname).setParameter("lname", clastname);
+            int clientID = ((Number)clientcc.getSingleResult()).intValue();
+
+            String car_hql = "SELECT id From Car WHERE model = :model";
+            Query carcc = session.createQuery(car_hql).setParameter("model", model);
+            int carID = ((Number)carcc.getSingleResult()).intValue();
+
+            Date rentdt, returndt;
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+            rentdt = formatter.parse(newRentDate);
+            returndt = formatter.parse(newReturnDate);
+
+            Rent rent = new Rent(carID, clientID, employeeID, rentdt, returndt);
+            rent.setId(rentID);
+            session.saveOrUpdate(rent);
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
     }
 
 }

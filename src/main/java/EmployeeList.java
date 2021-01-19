@@ -13,6 +13,7 @@ public class EmployeeList extends JFrame{
     private JButton searchButton;
     private JButton addButton;
     private JButton deleteButton;
+    private JButton editButton;
 
     public EmployeeList(){
         Hibernate db_connection = new Hibernate();
@@ -127,6 +128,18 @@ public class EmployeeList extends JFrame{
                     case 2:
                         break;
                 }
+            }
+        });
+
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = table1.getSelectedRow();
+                String name = (String) table1.getValueAt(index, 0);
+                String surname = (String) table1.getValueAt(index, 1);
+                String telephone = (String) table1.getValueAt(index, 2);
+                int salary = (int) table1.getValueAt(index, 3);
+                new UpdateEmployee(name, surname, telephone, salary);
             }
         });
 

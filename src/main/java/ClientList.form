@@ -53,16 +53,22 @@
             <properties/>
             <border type="none"/>
             <children>
+              <component id="3f3a0" class="javax.swing.JButton" binding="addButton">
+                <constraints border-constraint="South"/>
+                <properties>
+                  <text value="Dodaj"/>
+                </properties>
+              </component>
               <component id="530c4" class="javax.swing.JButton" binding="deleteButton">
                 <constraints border-constraint="Center"/>
                 <properties>
                   <text value="Usuń"/>
                 </properties>
               </component>
-              <component id="3f3a0" class="javax.swing.JButton" binding="addButton">
-                <constraints border-constraint="North"/>
+              <component id="ec335" class="javax.swing.JButton" binding="editButton">
+                <constraints border-constraint="East"/>
                 <properties>
-                  <text value="Dodaj"/>
+                  <text value="Edytuj"/>
                 </properties>
               </component>
             </children>
