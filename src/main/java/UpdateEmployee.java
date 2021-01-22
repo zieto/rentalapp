@@ -46,7 +46,15 @@ public class UpdateEmployee extends JFrame {
                 String newName = nameTextField.getText();
                 String newSurname = surnameTextField.getText();
                 String newTelephone = telephoneTextField.getText();
-                int newSalary = Integer.parseInt(salaryTextField.getText());
+                Integer newSalary = null;
+                try {
+                    newSalary = Integer.parseInt(salaryTextField.getText());
+                }
+                catch (NumberFormatException ef) {
+                    if (!salaryTextField.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Pensja musi być cyfrą!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
 
                 if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty() || telephoneTextField.getText().isEmpty() || salaryTextField.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);

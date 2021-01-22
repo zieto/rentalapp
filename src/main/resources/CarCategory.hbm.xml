@@ -11,12 +11,25 @@
         </meta>
 
         <id name = "id" type = "int" column = "id">
-            <generator class="native"/>
+            <generator class="increment"/>
         </id>
+        <many-to-one name="admin_id" class="Employee" column="opiekun_kategorii" not-null="true" />
+        <property name = "name" column = "nazwa_kategorii" type = "string" not-null="true" unique="true"/>
+        <property name = "desc" column = "opis" type = "string" not-null="true"/>
 
-        <property name = "admin_id" column = "opiekun_kategorii" type = "int"/>
-        <property name = "name" column = "nazwa_kategorii" type = "string"/>
-        <property name = "desc" column = "opis" type = "string"/>
 
     </class>
+    <database-object>
+        <create>
+            CREATE TRIGGER set_salary_after_insert
+            AFTER INSERT ON kategoria_samochod
+            FOR EACH ROW
+            BEGIN
+                UPDATE pracownicy SET wynagrodzenie=wynagrodzenie+400
+		        WHERE id=NEW.opiekun_kategorii;
+            END;
+        </create>
+        <drop></drop>
+
+    </database-object>
 </hibernate-mapping>

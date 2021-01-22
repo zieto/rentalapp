@@ -1,17 +1,25 @@
 public class CarCategory {
     private int id;
-    private int admin_id;
+    //private int admin_id;
     private String name;
     private String desc;
-
+    private Employee employee;
     private String pName;
     private String pLastName;
+
+    public Employee getEmployee(){
+        return employee;
+    }
+
+    public void setEmployee(Employee employee){
+        this.employee = employee;
+    }
 
     public CarCategory(){
     }
 
-    public CarCategory(int admin_id, String name, String desc){
-        this.admin_id = admin_id;
+    public CarCategory(Employee admin_id, String name, String desc){
+        this.employee = admin_id;
         this.name = name;
         this.desc = desc;
     }
@@ -31,13 +39,14 @@ public class CarCategory {
         this.id = id;
     }
 
-    public int getAdmin_id() {
-        return admin_id;
+    public Employee getAdmin_id() {
+        return this.employee;
     }
 
-    public void setAdmin_id(int admin_id) {
-        this.admin_id = admin_id;
+    public void setAdmin_id(Employee admin_id){
+        this.employee=admin_id;
     }
+
 
     public String getName() {
         return name;

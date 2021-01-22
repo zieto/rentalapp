@@ -3,11 +3,14 @@ import java.util.Date;
 
 public class Rent {
     private int id;
-    private int car_id;
-    private int client_id;
-    private int employee_id;
+    //private int car_id;
+    //private int client_id;
+    //private int employee_id;
     private Date rent_date;
     private Date return_date;
+    private Car car;
+    private Client client;
+    private Employee employee;
 
     private String kName;
     private String kLastName;
@@ -18,10 +21,10 @@ public class Rent {
     public Rent(){
     }
 
-    public Rent(int car_id, int client_id, int employee_id, Date rent_date, Date return_date){
-        this.car_id = car_id;
-        this.client_id = client_id;
-        this.employee_id = employee_id;
+    public Rent(Car car_id, Client client_id, Employee employee_id, Date rent_date, Date return_date){
+        this.car = car_id;
+        this.client = client_id;
+        this.employee = employee_id;
         this.rent_date = rent_date;
         this.return_date = return_date;
     }
@@ -44,28 +47,28 @@ public class Rent {
         this.id = id;
     }
 
-    public int getCar_id() {
-        return car_id;
+    public Car getCar_id() {
+        return car;
     }
 
-    public void setCar_id(int car_id) {
-        this.car_id = car_id;
+    public void setCar_id(Car car_id) {
+        this.car = car_id;
     }
 
-    public int getClient_id() {
-        return client_id;
+    public Client getClient_id() {
+        return client;
     }
 
-    public void setClient_id(int client_id) {
-        this.client_id = client_id;
+    public void setClient_id(Client client_id) {
+        this.client = client_id;
     }
 
-    public int getEmployee_id() {
-        return employee_id;
+    public Employee getEmployee_id() {
+        return employee;
     }
 
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployee_id(Employee employee_id) {
+        this.employee = employee_id;
     }
 
     public Date getRent_date() {

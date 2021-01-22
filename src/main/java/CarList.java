@@ -153,7 +153,7 @@ public class CarList extends JFrame {
                     }
 
                     if (rcb.equals(all) && ccb.equals(all) && !ecb.equals(all)){
-                        if (row[2].equals(ccb)){
+                        if (row[2].equals(ecb)){
                             model.addRow(row);
                         }
                     }

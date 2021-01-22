@@ -14,10 +14,10 @@
             <generator class="native"/>
         </id>
 
-        <property name = "firstName" column = "imie" type = "string"/>
-        <property name = "lastName" column = "nazwisko" type = "string"/>
-        <property name = "telephone" column = "telefon" type = "string"/>
-        <property name = "email" column = "email" type = "string"/>
+        <property name = "firstName" column = "imie" type = "string" not-null="true"/>
+        <property name = "lastName" column = "nazwisko" type = "string" not-null="true"/>
+        <property name = "telephone" column = "telefon" type = "string" not-null="true"/>
+        <property name = "email" column = "email" type = "string" not-null="true" unique="true"/>
 
     </class>
 </hibernate-mapping>

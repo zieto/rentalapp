@@ -40,19 +40,30 @@ public class AddEmployee extends JFrame{
                 String surname = surnameTextField.getText();
                 String telephone = telephoneTextField.getText();
                 String s = salaryTextField.getText();
-                int salary = Integer.parseInt(s);
+                Integer salary = null;
+                try {
+                    salary = Integer.parseInt(s);
+                }
+                catch (NumberFormatException ef) {
+                    if (!salaryTextField.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Pensja musi być cyfrą!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
 
                 if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty() || salaryTextField.getText().isEmpty() || telephoneTextField.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Formularz nie może być pusty!", "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
-                else {
-                    db_connection.addEmployee(name, surname, telephone, salary);
-
+                else if (salary == null){
+                    //
+                }
+                else if(db_connection.addEmployee(name, surname, telephone, salary)!=null) {
                     JOptionPane.showMessageDialog(null, "Dodano nowego pracownika!");
                     dispose();
                 }
+
+                }
             }
-        });
+        );
 
     }
 

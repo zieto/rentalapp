@@ -13,11 +13,13 @@
         <id name = "id" type = "int" column = "id">
             <generator class="native"/>
         </id>
-        <property name = "cat_id" column = "id_kategorii" type = "int"/>
-        <property name = "brand" column = "marka" type = "string"/>
-        <property name = "model" column = "model" type = "string"/>
-        <property name = "engine" column = "silnik" type = "string"/>
-        <property name = "rented" column = "wypozyczony" type = "boolean"/>
+        <many-to-one name="cat_id" class="CarCategory" column="id_kategorii" not-null="true" />
+        <property name = "brand" column = "marka" type = "string" not-null="true"/>
+        <property name = "model" column = "model" type = "string" not-null="true"/>
+        <property name = "engine" column = "silnik" type = "string" not-null="true"/>
+        <property name = "rented" type = "boolean" >
+            <column name = "wypozyczony" not-null="true" default="false"/>
+        </property>
 
     </class>
 </hibernate-mapping>

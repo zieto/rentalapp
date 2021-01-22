@@ -44,9 +44,7 @@ public class AddClient extends JFrame {
                 if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || telephoneTextField.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
-                else {
-                    db_connection.addClient(name, surname, telephone, email);
-
+                else if(db_connection.addClient(name, surname, telephone, email)!=null){
                     JOptionPane.showMessageDialog(null, "Dodano nowego klienta!");
                     dispose();
                 }

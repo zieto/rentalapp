@@ -10,7 +10,7 @@
         </property>
 
         <property name="connection.driver_class">
-            com.mysql.cj.jdbc.Driver
+                 com.mysql.cj.jdbc.Driver
         </property>
 
         <property name="connection.url">
@@ -21,6 +21,10 @@
                 root
         </property>
 
+        <property name="hbm2ddl.auto">
+                update
+        </property>
+
 
         <mapping resource="Employee.hbm.xml"/>
         <mapping resource="Rent.hbm.xml"/>
@@ -28,9 +32,5 @@
         <mapping resource="CarCategory.hbm.xml"/>
         <mapping resource="Client.hbm.xml"/>
 
-         <!--<property name="connection.password"/> -->
-
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>

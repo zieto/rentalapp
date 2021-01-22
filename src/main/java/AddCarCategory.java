@@ -49,9 +49,7 @@ public class AddCarCategory extends JFrame {
                 if (nameTextField.getText().isEmpty() || descriptionTextField.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
-                else {
-                    db_connection.addCarCategory(name, desc, split[0], split[1]);
-
+                else if(db_connection.addCarCategory(name, desc, split[0], split[1])!=null){
                     JOptionPane.showMessageDialog(null, "Dodano nową kategorię!");
                     dispose();
                 }

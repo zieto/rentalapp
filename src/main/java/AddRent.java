@@ -1,3 +1,4 @@
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,16 +70,24 @@ public class AddRent extends JFrame {
                 String cf_split[] = clientFullname.split(" ");
 
                 String daysString = textField1.getText();
-                int days = Integer.parseInt(daysString);
-
-                if (textField1.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null, "Podaj liczbę dni!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                Integer days = null;
+                try {
+                    days = Integer.parseInt(daysString);
                 }
-                else {
-                    db_connection.addRent(car_split[0], car_split[1], ef_split[0], ef_split[1], cf_split[0], cf_split[1], days);
+                catch (NumberFormatException ef){
+                    JOptionPane.showMessageDialog(null, "Liczba dni musi być cyfrą!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+                if (days!=null) {
 
-                    JOptionPane.showMessageDialog(null, "Pomyślnie wynajęto pojazd!");
-                    dispose();
+                    if (days <= 0) {
+                        JOptionPane.showMessageDialog(null, "Liczba dni musi być większa od zera!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
+                        db_connection.addRent(car_split[0], car_split[1], ef_split[0], ef_split[1], cf_split[0], cf_split[1], days);
+
+                        JOptionPane.showMessageDialog(null, "Pomyślnie wynajęto pojazd!");
+                        dispose();
+                    }
                 }
             }
         });

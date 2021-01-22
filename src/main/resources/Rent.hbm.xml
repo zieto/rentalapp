@@ -14,11 +14,37 @@
             <generator class="native"/>
         </id>
 
-        <property name = "car_id" column = "id_samochodu" type = "int"/>
-        <property name = "client_id" column = "id_klienta" type = "int"/>
-        <property name = "employee_id" column = "id_pracownika" type = "int"/>
-        <property name = "rent_date" column = "data_wypozyczenia" type = "date"/>
-        <property name = "return_date" column = "data_zwrotu" type = "date"/>
+        <many-to-one name="car_id" class="Car" column="id_samochodu" not-null="true" />
+        <many-to-one name="client_id" class="Client" column="id_klienta" not-null="true" />
+        <many-to-one name="employee_id" class="Employee" column="id_pracownika" not-null="true" />
+        <property name = "rent_date" column = "data_wypozyczenia" type = "date" not-null="true"/>
+        <property name = "return_date" column = "data_zwrotu" type = "date" not-null="true"/>
 
     </class>
+    <database-object>
+        <create>
+            CREATE TRIGGER set_rented_after_delete
+            AFTER DELETE ON wypozyczenia
+            FOR EACH ROW
+            BEGIN
+            UPDATE samochody SET wypozyczony=FALSE
+            WHERE id = OLD.id_samochodu;
+            END;
+        </create>
+        <drop></drop>
+
+    </database-object>
+    <database-object>
+        <create>
+            CREATE TRIGGER set_rented_after_insert
+            AFTER INSERT ON wypozyczenia
+            FOR EACH ROW
+            BEGIN
+            UPDATE samochody SET wypozyczony=TRUE
+            WHERE id=NEW.id_samochodu;
+            END;
+        </create>
+        <drop></drop>
+
+    </database-object>
 </hibernate-mapping>

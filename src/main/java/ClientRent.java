@@ -54,21 +54,34 @@ public class ClientRent extends JFrame{
                 String surname = surnameTextField.getText();
                 String email = emailTextField.getText();
                 String telephone = telephoneTextField.getText();
-                int days = Integer.parseInt(daysTextField.getText());
                 String carFull = (String) carComboBox.getSelectedItem();
                 String car_split[] = carFull.split(" ");
                 int clientID;
+                Integer days = null;
+                try {
+                    days = Integer.parseInt(daysTextField.getText());
+                }
+                catch (NumberFormatException ef){
+                    JOptionPane.showMessageDialog(null, "Liczba dni musi być cyfrą!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
 
                 if (nameTextField.getText().isEmpty() || surnameTextField.getText().isEmpty() || emailTextField.getText().isEmpty() || telephoneTextField.getText().isEmpty() || daysTextField.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
 
                 }
                 else {
-                    clientID = db_connection.addClient(name, surname, telephone, email);
-                    db_connection.addClientRent(car_split[0], car_split[1], clientID, days);
-                    JOptionPane.showMessageDialog(null, "Pomyślnie wynajęto pojazd!");
-                    dispose();
-                    new ChangeView();
+                    if (days!=null) {
+                        if (days <= 0){
+                            JOptionPane.showMessageDialog(null, "Liczba dni musi być większa od zera!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else {
+                            clientID = db_connection.addClient(name, surname, telephone, email);
+                            db_connection.addClientRent(car_split[0], car_split[1], clientID, days);
+                            JOptionPane.showMessageDialog(null, "Pomyślnie wynajęto pojazd!");
+                            dispose();
+                            new ChangeView();
+                        }
+                    }
                 }
             }
         });

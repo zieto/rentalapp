@@ -1,19 +1,20 @@
 public class Car {
 
     private int id;
-    private int cat_id;
+    //private int cat_id;
     private String brand;
     private String model;
     private String engine;
     private Boolean rented;
+    private CarCategory carCategory;
 
     private String cat;
 
     public Car(){
     }
 
-    public Car(int cat_id, String brand, String model, String engine, Boolean rented){
-        this.cat_id = cat_id;
+    public Car(CarCategory cat_id, String brand, String model, String engine, Boolean rented){
+        this.carCategory = cat_id;
         this.brand = brand;
         this.model = model;
         this.engine = engine;
@@ -28,6 +29,14 @@ public class Car {
         this.rented = rented;
     }
 
+    public CarCategory getCarCategory(){
+        return carCategory;
+    }
+
+    public void setCarCategory(CarCategory carCategory){
+        this.carCategory = carCategory;
+    }
+
     public int getId() {
         return id;
     }
@@ -36,12 +45,12 @@ public class Car {
         this.id = id;
     }
 
-    public int getCat_id() {
-        return cat_id;
+    public CarCategory getCat_id() {
+        return carCategory;
     }
 
-    public void setCat_id(int cat_id) {
-        this.cat_id = cat_id;
+    public void setCat_id(CarCategory cat_id) {
+        this.carCategory = cat_id;
     }
 
     public String getBrand() {
