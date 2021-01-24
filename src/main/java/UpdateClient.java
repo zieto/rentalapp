@@ -52,8 +52,7 @@ public class UpdateClient extends JFrame{
                     JOptionPane.showMessageDialog(null, "Wypełnij formę odpowiednimi danymi!", "Błąd", JOptionPane.ERROR_MESSAGE);
                 }
 
-                else {
-                    db_connection.updateClient(name, surname, email, telephone, newName, newSurname, newEmail, newTelephone);
+                else if (db_connection.updateClient(name, surname, email, telephone, newName, newSurname, newEmail, newTelephone)==1){
                     JOptionPane.showMessageDialog(null, "Pomyślnie zaktualizowano dane klienta!");
                     dispose();
                 }

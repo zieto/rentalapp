@@ -195,16 +195,21 @@ public class CarList extends JFrame {
                 String category = (String) table1.getValueAt(index, 3);
                 Boolean rented = (Boolean) table1.getValueAt(index, 4);
 
-                int cd = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz usunąć zaznaczony pojazd?");
-                switch (cd){
-                    case 0:
-                        model.removeRow(index);
-                        db_connection.deleteCar(brand, carModel, engine, category, rented);
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
+                if (rented){
+                    JOptionPane.showMessageDialog(null, "Nie można usunąć wynajętego samochodu!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    int cd = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz usunąć zaznaczony pojazd?");
+                    switch (cd) {
+                        case 0:
+                            model.removeRow(index);
+                            db_connection.deleteCar(brand, carModel, engine, category, rented);
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                    }
                 }
             }
         });

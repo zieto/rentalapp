@@ -38,7 +38,7 @@ public class Hibernate {
         } catch (HibernateException e) {
             JOptionPane.showMessageDialog(null, "Pracownik z takim numerem telefonu już istnieje!", "Błąd", JOptionPane.ERROR_MESSAGE);
             if (tx!=null) tx.rollback();
-            //e.printStackTrace();
+            e.printStackTrace();
         } finally {
             session.close();
         }
@@ -76,9 +76,10 @@ public class Hibernate {
     }
 
     /* Method to DELETE an employee from the records */
-    public void deleteEmployee(String name, String surname, String telephone, int salary){
+    public int deleteEmployee(String name, String surname, String telephone, int salary){
         Session session = factory.openSession();
         Transaction tx = null;
+        int ok = 1;
         try {
             String hql = "SELECT id FROM Employee WHERE firstName = :firstname AND lastName = :lastname AND telephone = :telephone AND salary = :salary";
             Query getEmpID = session.createQuery(hql).setParameter("firstname", name).setParameter("lastname", surname).setParameter("telephone", telephone).setParameter("salary", salary);
@@ -90,15 +91,22 @@ public class Hibernate {
         } catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
-        } finally {
+        } catch(PersistenceException ef){
+            JOptionPane.showMessageDialog(null, "Nie można usunąć pracownika, który aktualnie wynajmuje samochód lub jest opiekunem kategorii!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            if (tx!=null) tx.rollback();
+            ef.printStackTrace();
+            ok = 0;
+        }finally {
             session.close();
         }
+        return ok;
     }
 
     /* Method to DELETE a client from the records */
-    public void deleteClient(String name, String surname, String telephone, String email){
+    public int deleteClient(String name, String surname, String telephone, String email){
         Session session = factory.openSession();
         Transaction tx = null;
+        int ok = 1;
         try {
             String hql = "SELECT id FROM Client WHERE firstName = :firstname AND lastName = :lastname AND telephone = :telephone AND email = :email";
             Query getCliID = session.createQuery(hql).setParameter("firstname", name).setParameter("lastname", surname).setParameter("telephone", telephone).setParameter("email", email);
@@ -110,9 +118,15 @@ public class Hibernate {
         } catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace();
-        } finally {
+        } catch (PersistenceException ef){
+            JOptionPane.showMessageDialog(null, "Nie można usunąć klienta, który aktualnie wynajmuje samochód!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            if (tx!=null) tx.rollback();
+            ef.printStackTrace();
+            ok = 0;
+        }finally {
             session.close();
         }
+        return ok;
     }
 
     /* Method to DELETE a car from the records */
@@ -133,6 +147,33 @@ public class Hibernate {
         } finally {
             session.close();
         }
+    }
+
+    /* Method to DELETE a category from the records */
+    public int deleteCarCategory(String name, String desc, String ename, String esurname){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        int ok = 1;
+        try {
+            String hql = "SELECT cc.id FROM CarCategory cc, Employee e WHERE cc.name = :name AND cc.desc = :desc AND e.firstName = :ename AND e.lastName =: esurname";
+            Query getCcID = session.createQuery(hql).setParameter("name", name).setParameter("desc", desc).setParameter("ename", ename).setParameter("esurname", esurname);
+            int carCategoryID = ((Number)getCcID.getSingleResult()).intValue();
+            tx = session.beginTransaction();
+            CarCategory carCategory = session.get(CarCategory.class, carCategoryID);
+            session.delete(carCategory);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } catch (PersistenceException ef){
+            JOptionPane.showMessageDialog(null, "Nie można usunąć kategorii do której aktualnie są przypisane pojazdy!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            if (tx!=null) tx.rollback();
+            ef.printStackTrace();
+            ok = 0;
+        }finally {
+            session.close();
+        }
+        return ok;
     }
 
     /* Method to DELETE rent from the records */
@@ -488,8 +529,9 @@ public class Hibernate {
     }
 
     /* Method to EDIT client's info in the database */
-    public void updateClient(String oldName, String oldSurname, String oldEmail, String oldTelephone, String newName, String newSurname, String newEmail, String newTelephone){
+    public int updateClient(String oldName, String oldSurname, String oldEmail, String oldTelephone, String newName, String newSurname, String newEmail, String newTelephone){
         Session session = factory.openSession();
+        Integer ok = 1;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -497,7 +539,6 @@ public class Hibernate {
             String hql = "SELECT id From Client WHERE firstName = :fname AND lastName = :lname AND email = :email AND telephone = :tele";
             Query cc = session.createQuery(hql).setParameter("fname", oldName).setParameter("lname", oldSurname).setParameter("email", oldEmail).setParameter("tele", oldTelephone);
             int clientID = ((Number)cc.getSingleResult()).intValue();
-
             Client client = new Client(newName, newSurname, newTelephone, newEmail);
             client.setId(clientID);
             session.saveOrUpdate(client);
@@ -508,9 +549,11 @@ public class Hibernate {
             e.printStackTrace();
         } catch (PersistenceException ef){
             JOptionPane.showMessageDialog(null, "Klient z takim adresem e-mail już istnieje!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            ok = 0;
         }finally {
             session.close();
         }
+        return ok;
     }
 
     /* Method to EDIT employee's info in the database */

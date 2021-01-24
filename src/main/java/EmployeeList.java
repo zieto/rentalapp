@@ -23,7 +23,7 @@ public class EmployeeList extends JFrame{
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         pack();
-        setSize(700,400);
+        setSize(700,300);
 
         textFieldName.setColumns(10);
         textFieldSurname.setColumns(10);
@@ -120,8 +120,10 @@ public class EmployeeList extends JFrame{
                 int cd = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz usunąć zaznaczonego pracownika?");
                 switch (cd){
                     case 0:
-                        model.removeRow(index);
-                        db_connection.deleteEmployee(name, surname, telephone, salary);
+                        if(db_connection.deleteEmployee(name, surname, telephone, salary)==1){
+                            model.removeRow(index);
+
+                        }
                         break;
                     case 1:
                         break;

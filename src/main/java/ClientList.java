@@ -120,8 +120,9 @@ public class ClientList extends JFrame{
                 int cd = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz usunąć zaznaczonego klienta?");
                 switch (cd){
                     case 0:
-                        model.removeRow(index);
-                        db_connection.deleteClient(name, surname, telephone, email);
+                        if(db_connection.deleteClient(name, surname, telephone, email)==1){
+                            model.removeRow(index);
+                        }
                         break;
                     case 1:
                         break;

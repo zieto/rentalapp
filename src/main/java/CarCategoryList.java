@@ -36,6 +36,7 @@ public class CarCategoryList extends JFrame{
             }
         });
 
+
         DefaultTableModel model = new DefaultTableModel();
         table1 = new JTable(model);
 
@@ -71,6 +72,31 @@ public class CarCategoryList extends JFrame{
                     row[1] = list.get(i).getDesc();
                     row[2] = list.get(i).getpName() + " " + list.get(i).getpLastName();
                     model.addRow(row);
+                }
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = table1.getSelectedRow();
+                String ccName = (String) table1.getValueAt(index, 0);
+                String ccDesc = (String) table1.getValueAt(index, 1);
+                String pFullname = (String) table1.getValueAt(index, 2);
+                String pf_split[] = pFullname.split(" ");
+
+
+                int cd = JOptionPane.showConfirmDialog(null, "Czy na pewno chcesz usunąć zaznaczoną pozycję?");
+                switch (cd){
+                    case 0:
+                        if(db_connection.deleteCarCategory(ccName, ccDesc, pf_split[0], pf_split[1])==1){
+                            model.removeRow(index);
+                        }
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
                 }
             }
         });

@@ -25,7 +25,7 @@ public class AddRent extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         pack();
-        setSize(850,80);
+        setSize(950,80);
 
 
         List<Client> client_list = db_connection.listClients();
