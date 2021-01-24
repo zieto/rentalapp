@@ -82,7 +82,8 @@ public class Hibernate {
         int ok = 1;
         try {
             String hql = "SELECT id FROM Employee WHERE firstName = :firstname AND lastName = :lastname AND telephone = :telephone AND salary = :salary";
-            Query getEmpID = session.createQuery(hql).setParameter("firstname", name).setParameter("lastname", surname).setParameter("telephone", telephone).setParameter("salary", salary);
+            Query getEmpID = session.createQuery(hql).setParameter("firstname", name).setParameter("lastname", surname).setParameter("telephone", telephone).setParameter("salary", salary)
+                    .setMaxResults(1);
             int EmployeeID = ((Number)getEmpID.getSingleResult()).intValue();
             tx = session.beginTransaction();
             Employee employee = session.get(Employee.class, EmployeeID);
@@ -111,6 +112,7 @@ public class Hibernate {
             String hql = "SELECT id FROM Client WHERE firstName = :firstname AND lastName = :lastname AND telephone = :telephone AND email = :email";
             Query getCliID = session.createQuery(hql).setParameter("firstname", name).setParameter("lastname", surname).setParameter("telephone", telephone).setParameter("email", email);
             int ClientID = ((Number)getCliID.getSingleResult()).intValue();
+            getCliID.setMaxResults(1);
             tx = session.beginTransaction();
             Client client = session.get(Client.class, ClientID);
             session.delete(client);
@@ -136,6 +138,7 @@ public class Hibernate {
         try {
             String hql = "SELECT c.id FROM Car c, CarCategory cc WHERE c.brand = :brand AND c.model = :model AND c.engine = :engine AND c.rented = :rented AND c.cat_id = cc.id AND cc.name = :ccname";
             Query getCarID = session.createQuery(hql).setParameter("brand", brand).setParameter("model", model).setParameter("engine", engine).setParameter("ccname", category).setParameter("rented",rented);
+            getCarID.setMaxResults(1);
             int CarID = ((Number)getCarID.getSingleResult()).intValue();
             tx = session.beginTransaction();
             Car car = session.get(Car.class, CarID);
@@ -157,6 +160,7 @@ public class Hibernate {
         try {
             String hql = "SELECT cc.id FROM CarCategory cc, Employee e WHERE cc.name = :name AND cc.desc = :desc AND e.firstName = :ename AND e.lastName =: esurname";
             Query getCcID = session.createQuery(hql).setParameter("name", name).setParameter("desc", desc).setParameter("ename", ename).setParameter("esurname", esurname);
+            getCcID.setMaxResults(1);
             int carCategoryID = ((Number)getCcID.getSingleResult()).intValue();
             tx = session.beginTransaction();
             CarCategory carCategory = session.get(CarCategory.class, carCategoryID);
@@ -185,7 +189,8 @@ public class Hibernate {
                     " AND c.model = :model AND cli.firstName = :kname AND cli.lastName = :ksurname AND e.firstName = :pname AND e.lastName = :psurname";
             Query getRentID = session.createQuery(hql).setParameter("model", model).setParameter("kname", kName)
                     .setParameter("ksurname", kSurname).setParameter("pname", pName).setParameter("psurname", pSurname)
-                    .setParameter("rentdt", rent_date).setParameter("retdt", ret_date);
+                    .setParameter("rentdt", rent_date).setParameter("retdt", ret_date)
+                    .setMaxResults(1);
             int RentID = ((Number)getRentID.getSingleResult()).intValue();
             tx = session.beginTransaction();
             Rent rent = session.get(Rent.class, RentID);
@@ -361,7 +366,7 @@ public class Hibernate {
         } catch (HibernateException e) {
             JOptionPane.showMessageDialog(null, "Klient z takim adresem e-mail już istnieje!", "Błąd", JOptionPane.ERROR_MESSAGE);
             if (tx!=null) tx.rollback();
-            //e.printStackTrace();
+            e.printStackTrace();
         } finally {
             session.close();
         }
@@ -377,6 +382,7 @@ public class Hibernate {
             tx = session.beginTransaction();
             String hql = "SELECT id FROM CarCategory WHERE name = :name";
             Query cc = session.createQuery(hql).setParameter("name", cat);
+            cc.setMaxResults(1);
             int result = ((Number)cc.getSingleResult()).intValue();
             CarCategory carCategory = session.get(CarCategory.class, result);
             Car car = new Car(carCategory, brand, model, engine, false);
@@ -399,7 +405,8 @@ public class Hibernate {
         try {
             tx = session.beginTransaction();
             String hql = "SELECT id FROM Employee WHERE firstName = :firstname AND lastName = :lastname";
-            Query cc = session.createQuery(hql).setParameter("firstname", pName).setParameter("lastname", pLastName);
+            Query cc = session.createQuery(hql).setParameter("firstname", pName).setParameter("lastname", pLastName)
+                    .setMaxResults(1);
             int result = ((Number)cc.getSingleResult()).intValue();
             Employee employee = session.get(Employee.class, result);
             CarCategory carCategory = new CarCategory(employee, name, desc);
@@ -423,17 +430,20 @@ public class Hibernate {
         try {
             tx = session.beginTransaction();
             String hql = "SELECT id FROM Employee WHERE firstName = :firstname AND lastName = :lastname";
-            Query getEmpID = session.createQuery(hql).setParameter("firstname", empName).setParameter("lastname", empLastName);
+            Query getEmpID = session.createQuery(hql).setParameter("firstname", empName).setParameter("lastname", empLastName)
+                    .setMaxResults(1);
             int employeeID = ((Number)getEmpID.getSingleResult()).intValue();
             Employee employee = session.get(Employee.class, employeeID);
 
             String hql2 = "SELECT id FROM Client WHERE firstName = :firstname AND lastName = :lastname";
-            Query getCliID = session.createQuery(hql2).setParameter("firstname", cliName).setParameter("lastname", cliLastName);
+            Query getCliID = session.createQuery(hql2).setParameter("firstname", cliName).setParameter("lastname", cliLastName)
+                    .setMaxResults(1);
             int clientID = ((Number)getCliID.getSingleResult()).intValue();
             Client client = session.get(Client.class, clientID);
 
-            String hql3 = "SELECT id FROM Car WHERE model = :model AND brand = :brand";
-            Query getCarID = session.createQuery(hql3).setParameter("brand", carBrand).setParameter("model", carModel);
+            String hql3 = "SELECT id FROM Car WHERE model = :model AND brand = :brand AND rented = false";
+            Query getCarID = session.createQuery(hql3).setParameter("brand", carBrand).setParameter("model", carModel)
+                    .setMaxResults(1);
             int carID = ((Number)getCarID.getSingleResult()).intValue();
             Car car = session.get(Car.class, carID);
 
@@ -470,8 +480,9 @@ public class Hibernate {
             int employeeID = ((Number)getEmpID.getSingleResult()).intValue();
             Employee employee = session.get(Employee.class, employeeID);
 
-            String hql2 = "SELECT id FROM Car WHERE model = :model AND brand = :brand";
-            Query getCarID = session.createQuery(hql2).setParameter("brand", carBrand).setParameter("model", carModel);
+            String hql2 = "SELECT id FROM Car WHERE model = :model AND brand = :brand AND rented = false";
+            Query getCarID = session.createQuery(hql2).setParameter("brand", carBrand).setParameter("model", carModel)
+                    .setMaxResults(1);
             int carID = ((Number)getCarID.getSingleResult()).intValue();
             Car car = session.get(Car.class, carID);
 
@@ -503,17 +514,20 @@ public class Hibernate {
             tx = session.beginTransaction();
             String hql = "SELECT id FROM CarCategory WHERE name = :name";
             Query cc = session.createQuery(hql).setParameter("name", cat);
+            cc.setMaxResults(1);
             int result = ((Number)cc.getSingleResult()).intValue();
             CarCategory res = session.get(CarCategory.class, result);
 
             String hql2 = "SELECT id FROM CarCategory WHERE name = :name";
             Query cc2 = session.createQuery(hql2).setParameter("name", newCat);
+            cc2.setMaxResults(1);
             int newResult = ((Number)cc2.getSingleResult()).intValue();
 
             CarCategory carCategory = session.get(CarCategory.class, newResult);
 
             String hql3 = "SELECT id From Car WHERE brand = :brand AND model = :model AND engine = :engine AND cat_id = :catid";
-            Query cc3 = session.createQuery(hql3).setParameter("brand", brand).setParameter("model", model).setParameter("engine", engine).setParameter("catid", res);
+            Query cc3 = session.createQuery(hql3).setParameter("brand", brand).setParameter("model", model).setParameter("engine", engine).setParameter("catid", res)
+                    .setMaxResults(1);
             int carID = ((Number)cc3.getSingleResult()).intValue();
             Car car = new Car(carCategory, newBrand, newModel, newEngine, false);
             car.setId(carID);
@@ -537,7 +551,8 @@ public class Hibernate {
             tx = session.beginTransaction();
 
             String hql = "SELECT id From Client WHERE firstName = :fname AND lastName = :lname AND email = :email AND telephone = :tele";
-            Query cc = session.createQuery(hql).setParameter("fname", oldName).setParameter("lname", oldSurname).setParameter("email", oldEmail).setParameter("tele", oldTelephone);
+            Query cc = session.createQuery(hql).setParameter("fname", oldName).setParameter("lname", oldSurname).setParameter("email", oldEmail).setParameter("tele", oldTelephone)
+                    .setMaxResults(1);
             int clientID = ((Number)cc.getSingleResult()).intValue();
             Client client = new Client(newName, newSurname, newTelephone, newEmail);
             client.setId(clientID);
@@ -564,7 +579,8 @@ public class Hibernate {
             tx = session.beginTransaction();
 
             String hql = "SELECT id From Employee WHERE firstName = :fname AND lastName = :lname AND salary = :salary AND telephone = :tele";
-            Query cc = session.createQuery(hql).setParameter("fname", oldName).setParameter("lname", oldSurname).setParameter("salary", oldSalary).setParameter("tele", oldTelephone);
+            Query cc = session.createQuery(hql).setParameter("fname", oldName).setParameter("lname", oldSurname).setParameter("salary", oldSalary).setParameter("tele", oldTelephone)
+                    .setMaxResults(1);
             int employeeID = ((Number)cc.getSingleResult()).intValue();
 
             Employee employee = new Employee(newName, newSurname, newTelephone, newSalary);
@@ -592,16 +608,19 @@ public class Hibernate {
 
             String ehql = "SELECT id From Employee WHERE firstName = :fname AND lastName = :lname";
             Query ecc = session.createQuery(ehql).setParameter("fname", enewname).setParameter("lname", enewsurname);
+            ecc.setMaxResults(1);
             int employeeID = ((Number)ecc.getSingleResult()).intValue();
             Employee employee = session.get(Employee.class, employeeID);
 
             String client_hql = "SELECT id From Client WHERE firstName = :fname AND lastName = :lname";
             Query clientcc = session.createQuery(client_hql).setParameter("fname", cname).setParameter("lname", clastname);
+            clientcc.setMaxResults(1);
             int clientID = ((Number)clientcc.getSingleResult()).intValue();
             Client client = session.get(Client.class, clientID);
 
             String car_hql = "SELECT id From Car WHERE model = :model";
             Query carcc = session.createQuery(car_hql).setParameter("model", model);
+            carcc.setMaxResults(1);
             int carID = ((Number)carcc.getSingleResult()).intValue();
             Car car = session.get(Car.class, carID);
 
@@ -610,7 +629,7 @@ public class Hibernate {
                     "AND r.rent_date = :oldrentdt AND r.return_date = :oldreturndt";
             Query cc = session.createQuery(hql).setParameter("eoldname", eoldname).setParameter("eoldsurname", eoldsurname).setParameter("model", model)
                     .setParameter("cname", cname).setParameter("clastname", clastname).setParameter("oldrentdt", oldRentDate)
-                    .setParameter("oldreturndt", oldReturnDate);
+                    .setParameter("oldreturndt", oldReturnDate).setMaxResults(1);
             int rentID = ((Number)cc.getSingleResult()).intValue();
 
             Date rentdt, returndt;

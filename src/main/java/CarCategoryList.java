@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -75,6 +76,15 @@ public class CarCategoryList extends JFrame{
                 }
             }
         });
+
+        table1.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table1.getColumnModel().getColumn(1).setPreferredWidth(450);
+        table1.getColumnModel().getColumn(2).setPreferredWidth(150);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        table1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        table1.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 
         deleteButton.addActionListener(new ActionListener() {
             @Override

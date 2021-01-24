@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,6 +80,22 @@ public class RentList extends JFrame {
             row[4] = list.get(i).getReturn_date();
             model.addRow(row);
         }
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+
+        table1.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table1.getColumnModel().getColumn(1).setPreferredWidth(200);
+        table1.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table1.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table1.getColumnModel().getColumn(4).setPreferredWidth(100);
+
+        for (int i=0; i<5; i++){
+            if (i!=1 && i!=2) {
+                table1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
+        }
+
 
         JScrollPane jScrollPane = new JScrollPane(table1);
         table1.setVisible(true);
